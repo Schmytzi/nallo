@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
     
     
       
@@ -872,7 +872,7 @@
 </tbody>
 </table>
 <h2 id="methylation-pileups">Methylation pileups</h2>
-<p><a href="https://github.com/nanoporetech/modkit">Modkit</a> is used to create methylation pileups, producing bedMethyl files for both haplotagged and ungrouped reads. Additionaly, methylation information can be viewed in the BAM files, for example in IGV.</p>
+<p><a href="https://github.com/nanoporetech/modkit">Modkit</a> is used to create methylation pileups, producing bedMethyl files for both haplotagged and ungrouped reads. Additionally, methylation information can be viewed in the BAM files, for example in IGV.</p>
 <table>
 <thead>
 <tr>
@@ -882,19 +882,19 @@
 </thead>
 <tbody>
 <tr>
-<td><code>methylation/modkit/pileup/phased/{sample}/*.modkit_pileup_phased_*.bed.gz</code></td>
-<td>bedMethyl file with summary counts from haplotagged reads</td>
+<td><code>methylation/modkit/pileup/{sample}/*.modkit_pileup_phased_*.bed.gz</code></td>
+<td>bedMethyl file with summary counts from haplotagged reads (if phasing is turned on)</td>
 </tr>
 <tr>
-<td><code>methylation/modkit/pileup/phased/{sample}/*.modkit_pileup_phased_ungrouped.bed.gz</code></td>
-<td>bedMethyl file for ungrouped reads</td>
+<td><code>methylation/modkit/pileup/{sample}/*.modkit_pileup_phased_ungrouped.bed.gz</code></td>
+<td>bedMethyl file for ungrouped reads (if phasing is turned on)</td>
 </tr>
 <tr>
-<td><code>methylation/modkit/pileup/unphased/{sample}/*.modkit_pileup.bed.gz</code></td>
-<td>bedMethyl file with summary counts from all reads</td>
+<td><code>methylation/modkit/pileup/{sample}/*.modkit_pileup.bed.gz</code></td>
+<td>bedMethyl file with summary counts from all reads (if phasing is turned off)</td>
 </tr>
 <tr>
-<td><code>methylation/modkit/pileup/unphased/{sample}/*.bed.gz.tbi</code></td>
+<td><code>methylation/modkit/pileup/{sample}/*.bed.gz.tbi</code></td>
 <td>Index of the corresponding bedMethyl file</td>
 </tr>
 </tbody>
@@ -1088,8 +1088,12 @@
 </thead>
 <tbody>
 <tr>
-<td><code>pedigree/{project}.ped</code></td>
-<td>PED file updated with somalier-inferred sex</td>
+<td><code>pedigree/{project}/{project}.ped</code></td>
+<td>PED file updated with somalier-inferred sex per project</td>
+</tr>
+<tr>
+<td><code>pedigree/{family}/{family).ped</code></td>
+<td>PED file updated with somalier-inferred sex per family</td>
 </tr>
 <tr>
 <td><code>qc/somalier/relate/{project}/{project}.html</code></td>
@@ -1169,7 +1173,11 @@
 </tbody>
 </table>
 <h3 id="repeats">Repeats</h3>
-<p><a href="https://github.com/PacificBiosciences/trgt">TRGT</a> is used to call repeats:</p>
+<p><a href="https://github.com/PacificBiosciences/trgt">TRGT</a> is used to call repeats.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Merged variants per family are only output without annotation if <code>--skip_repeat_annotation</code> is true. Variants per sample are always output without annotation.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -1179,32 +1187,32 @@
 </thead>
 <tbody>
 <tr>
-<td><code>repeat_calling/trgt/multi_sample/{project}/*.vcf.gz</code></td>
-<td>Merged VCF file for all samples</td>
+<td><code>repeats/{family}/{family}_repeat_expansions.vcf.gz</code></td>
+<td>Merged VCF file per family</td>
 </tr>
 <tr>
-<td><code>repeat_calling/trgt/multi_sample/{project}/*.vcf.gz.tbi</code></td>
+<td><code>repeats/{family}/{family}_repeat_expansions.vcf.gz.tbi</code></td>
 <td>Index of the VCF file</td>
 </tr>
 <tr>
-<td><code>repeat_calling/trgt/single_sample/{sample}/*.vcf.gz</code></td>
+<td><code>repeats/sample/{sample}/{sample}_sorted.vcf.gz</code></td>
 <td>VCF file with called repeats for a sample</td>
 </tr>
 <tr>
-<td><code>repeat_calling/trgt/single_sample/{sample}/*.vcf.gz.tbi</code></td>
+<td><code>repeats/sample/{sample}/{sample}_sorted.vcf.gz.tbi</code></td>
 <td>Index of the VCF file</td>
 </tr>
 <tr>
-<td><code>repeat_calling/trgt/single_sample/{sample}/*.bam</code></td>
+<td><code>repeats/sample/{sample}/{sample}_spanning_sorted.bam</code></td>
 <td>BAM file with sorted spanning reads</td>
 </tr>
 <tr>
-<td><code>repeat_calling/trgt/single_sample/{sample}/*.bai</code></td>
+<td><code>repeats/sample/{sample}/{sample}_spanning_sorted.bai</code></td>
 <td>Index of the BAM file</td>
 </tr>
 </tbody>
 </table>
-<p><a href="https://github.com/Clinical-Genomics/stranger">Stranger</a> is used to annotate them:</p>
+<p><a href="https://github.com/Clinical-Genomics/stranger">Stranger</a> is used to annotate repeats.</p>
 <table>
 <thead>
 <tr>
@@ -1214,12 +1222,12 @@
 </thead>
 <tbody>
 <tr>
-<td><code>repeat_annotation/stranger/{sample}/*.vcf.gz</code></td>
-<td>Annotated VCF file</td>
+<td><code>repeat_expansions/{family}/{family}_repeat_expansions_annotated.vcf.gz</code></td>
+<td>Merged, annotated VCF file per family</td>
 </tr>
 <tr>
-<td><code>repeat_annotation/stranger/{sample}/*.vcf.gz.tbi</code></td>
-<td>Index of the annotated VCF file</td>
+<td><code>repeat_expansions/{family}/{family}_repeat_expansions_annotated.vcf.gz.tbi</code></td>
+<td>Index of the VCF file</td>
 </tr>
 </tbody>
 </table>
