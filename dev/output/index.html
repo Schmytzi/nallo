@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
     
     
       
@@ -152,11 +152,13 @@
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -193,6 +195,7 @@
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
@@ -265,6 +268,7 @@
       <a href=".." class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Home
     
@@ -285,6 +289,7 @@
     <li class="md-nav__item">
       <a href="../usage/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Usage
@@ -316,6 +321,7 @@
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
+  
   <span class="md-ellipsis">
     Output
     
@@ -327,6 +333,7 @@
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
+  
   
   <span class="md-ellipsis">
     Output
@@ -455,6 +462,15 @@
   <a href="#somalier" class="md-nav__link">
     <span class="md-ellipsis">
       Somalier
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peddy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Peddy
     </span>
   </a>
   
@@ -618,6 +634,7 @@
       <a href="../parameters/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
     Parameters
     
@@ -638,6 +655,7 @@
     <li class="md-nav__item">
       <a href="../CITATIONS/" class="md-nav__link">
         
+  
   
   <span class="md-ellipsis">
     Citations
@@ -780,6 +798,15 @@
   <a href="#somalier" class="md-nav__link">
     <span class="md-ellipsis">
       Somalier
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peddy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Peddy
     </span>
   </a>
   
@@ -1294,6 +1321,58 @@
 <tr>
 <td><code>qc/somalier/relate/{project}/{project}.samples.tsv</code></td>
 <td>Information about individual samples</td>
+</tr>
+</tbody>
+</table>
+<h3 id="peddy">Peddy</h3>
+<p><a href="https://github.com/brentp/peddy">peddy</a> checks relatedness and sex.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>qc/peddy/{family}/{family}.peddy.ped</code></td>
+<td>PED file updated with peddy-inferred sex per family</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.html</code></td>
+<td>HTML report</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.vs.html</code></td>
+<td>HTML report of observed vs expected relatedness</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.sex_check.csv</code></td>
+<td>Comparison between reported sex (ped file) and that inferred from peddy</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.het_check.csv</code></td>
+<td>Het check does general QC including rate of het calls, allele-balance at het calls, mean and median depth, and a PCA projection onto thousand genomes. Incudes ancestry check</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.ped_check.csv</code></td>
+<td>Ped check compares the relatedness of 2 samples as reported in a .ped file to the relatedness inferred from the genotypes and ~25K sites in the genome</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.sex_check.png</code></td>
+<td>PNG comparison between reported sex (ped file) and that inferred from peddy</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.het_check.png</code></td>
+<td>PNG of heterozygosity check</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.ped_check.png</code></td>
+<td>PNG of the ped check comparison</td>
+</tr>
+<tr>
+<td><code>qc/peddy/{family}/{family}.ped_check.rel-difference.csv</code></td>
+<td>CSV file with the comparison between inferred and given relatedness</td>
 </tr>
 </tbody>
 </table>
@@ -1898,7 +1977,9 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.code.copy", "navigation.instant", "navigation.top", "navigation.tracking", "navigation.sections", "navigation.footer", "search.share", "toc.follow"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.code.copy", "navigation.instant", "navigation.top", "navigation.tracking", "navigation.sections", "navigation.footer", "search.share", "toc.follow"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
