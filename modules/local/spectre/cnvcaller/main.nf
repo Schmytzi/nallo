@@ -8,7 +8,7 @@ process SPECTRE_CNVCALLER {
     container "docker.io/schmytzi/spectre-cnv:0.2.1"
 
     input:
-    tuple val(meta) , path(bed, stageAs: "in/*"), path(csi, stageAs: "in/*")
+    tuple val(meta) , path(bed), path(csi)
     tuple val(meta2), path(fasta)
     tuple val(meta3), path(fai)
     tuple val(meta4), path(metadata)  // reference metadata, optional
@@ -40,7 +40,7 @@ process SPECTRE_CNVCALLER {
         $blacklist_arg \\
         --threads $task.cpus \\
         --sample-id ${meta.id} \\
-        --coverage in \\
+        --coverage $bed \\
         --reference $fasta \\
         --output-dir out \\
 
