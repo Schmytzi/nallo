@@ -17,7 +17,7 @@ process SPECTRE_CNVCALLER {
 
     output:
     tuple val(meta), path("out/*.bed.gz")               , emit: bed
-    tuple val(meat), path("out/*.bed.gz.tbi")           , emit: bed_tbi
+    tuple val(meta), path("out/*.bed.gz.tbi")           , emit: bed_tbi
     tuple val(meta), path("out/*.vcf.gz")               , emit: vcf
     tuple val(meta), path("out/*.vcf.gz.tbi")           , emit: vcf_tbi
     tuple val(meta), path("out/*.spc.gz")               , emit: spc
