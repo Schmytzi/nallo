@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
     
     
       
@@ -1268,7 +1268,7 @@
 <h1 id="genomic-medicine-swedennallo-usage">genomic-medicine-sweden/nallo: Usage</h1>
 <h2 id="prerequisites">Prerequisites</h2>
 <ol>
-<li>Install Nextflow (&gt;=24.04.2) using the instructions <a href="https://nextflow.io/docs/latest/getstarted.html#installation">here.</a></li>
+<li>Install Nextflow (&gt;=24.10.5) using the instructions <a href="https://nextflow.io/docs/latest/getstarted.html#installation">here.</a></li>
 <li>Install one of the following technologies for full pipeline reproducibility: Docker, Singularity, Podman, Shifter or Charliecloud.</li>
 </ol>
 <div class="admonition warning">
@@ -1314,8 +1314,9 @@ NB: The order of profiles is important! They are loaded in sequence, so later pr
 </span></code></pre></div>
 <p>It has to be a comma-separated file with seven columns and a header row, as shown in the example below:</p>
 <div class="language-console highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="go">project,sample,file,family_id,paternal_id,maternal_id,sex,phenotype</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="go">testrun,HG002,/path/to/HG002.fastq.gz,FAM,HG003,0,1,2</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="go">testrun,HG003,/path/to/HG003.bam,FAM,0,0,2,1</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="go">testrun,HG002,/path/to/HG002_1.bam,NIST,HG003,0,1,2</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="go">testrun,HG002,/path/to/HG002_2.bam,NIST,HG003,0,1,2</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="go">testrun,HG003,/path/to/HG003.fastq.gz,NIST,0,0,2,1</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -1335,7 +1336,7 @@ NB: The order of profiles is important! They are loaded in sequence, so later pr
 </tr>
 <tr>
 <td><code>file</code></td>
-<td>Absolute path to gzipped FASTQ or BAM file. File has to have the extension ".fastq.gz", .fq.gz" or ".bam".</td>
+<td>Absolute path to a BAM or gzipped FASTQ file. File has to have the extension ".fastq.gz", .fq.gz" or ".bam".</td>
 </tr>
 <tr>
 <td><code>family_id</code></td>
@@ -1359,12 +1360,16 @@ NB: The order of profiles is important! They are loaded in sequence, so later pr
 </tr>
 </tbody>
 </table>
+<div class="admonition tip">
+<p class="admonition-title">Multiple files per sample</p>
+<p>If you have multiple files per sample, they can be added on separate rows. Keep all columns except <code>file</code> identical for each sample. The files will be merged after alignment or before assembly.</p>
+</div>
 <h3 id="presets">Presets</h3>
 <p>This pipeline comes with three different presets that should be set with the <code>--preset</code> parameter: <code>revio</code> (default), <code>pacbio</code> or <code>ONT_R10</code>. The preset parameter controls certain technology specific tools and parameters.</p>
 <div class="admonition info">
 <p class="admonition-title">Preset effects on subworkflows</p>
 <ul>
-<li><code>--skip_genome_assembly</code> and <code>--skip_repeat_annotation</code> will be set to <code>true</code> for <code>ONT_R10</code></li>
+<li><code>--skip_repeat_annotation</code> will be set to <code>true</code> for <code>ONT_R10</code></li>
 <li><code>--skip_methylation_pileups</code> will be set to <code>true</code> for <code>pacbio</code></li>
 </ul>
 </div>
@@ -1417,7 +1422,10 @@ NB: The order of profiles is important! They are loaded in sequence, so later pr
 <p>This subworkflow depends on the alignment subworkflow, but requires no additional files.</p>
 <p>Turned off with <code>--skip_qc</code>.</p>
 <h4 id="assembly">Assembly</h4>
-<p>This subworkflow contains both genome assembly and alignment of assemblies to the reference genome. The genome assembly assemblies the genome into two haplotypes and converts it to fasta. The align assemblies subworkflow then maps the reads to the reference genome, merges and haplotags them, and requires no additional files except the reference genome.</p>
+<p>This step assembles genomes and aligns them to a reference genome.</p>
+<p><a href="https://github.com/chhylp123/hifiasm">Hifiasm</a> is used to assemble the genome into a pair of haplotypes. Stand-alone, it has support for both PacBio and ONT data, or a combination of PacBio and ultra-long ONT reads (or Hi-C reads), but Nallo currently assumes only one data type per run (set by <code>--preset</code>). By default, a pair of haplotype-resolved assemblies are generated using hifiasm with <a href="https://hifiasm.readthedocs.io/en/latest/trio-assembly.html">trio-binning</a> for samples where parental reads are available, otherwise they are assembled using a <a href="https://hifiasm.readthedocs.io/en/latest/pa-assembly.html">hifi-only</a> approach. If you don't wish to use trio-binning, this can be turned off by setting <code>--hifiasm_mode</code> to <code>hifi-only</code>.</p>
+<p>The assemblies are then aligned to the reference genome using <a href="https://github.com/lh3/minimap2">minimap2</a>, merged and haplotagged (with <code>HP</code> tags).</p>
+<p>No additional files other than the reference genome required.</p>
 <p>Turned off with <code>--skip_genome_assembly</code>.</p>
 <h4 id="call-paralogs">Call paralogs</h4>
 <p>This subworkflow depends on the mapping subworkflow, but requires no additional files.</p>
@@ -1881,10 +1889,10 @@ We recommend adding the following line to your environment to limit this (typica
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.code.copy", "navigation.instant", "navigation.top", "navigation.tracking", "navigation.sections", "navigation.footer", "search.share", "toc.follow"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.code.copy", "navigation.instant", "navigation.top", "navigation.tracking", "navigation.sections", "navigation.footer", "search.share", "toc.follow"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.50899def.min.js"></script>
+      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
       
     
   </body>
