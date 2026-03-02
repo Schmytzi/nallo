@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
     
     
       
@@ -1101,6 +1101,30 @@
 <td></td>
 </tr>
 <tr>
+<td><code>create_maf_track</code></td>
+<td>Whether to create a MAF track from SNV calls when calling SVs with HiFiCNV or Sawfish. Requires SNV calling to finish before calling SVs, so deactivating this can speed up the pipeline. Defaults to <code>true</code></td>
+<td><code>boolean</code></td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>create_hificnv_maf_track</code></td>
+<td>Whether to create a MAF track from SNV calls when calling CNVs with HiFiCNV. Requires SNV calling to finish before calling SVs, so deactivating this can speed up the pipeline. Defaults to <code>create_maf_track</code></td>
+<td><code>boolean</code></td>
+<td>True</td>
+<td></td>
+<td>True</td>
+</tr>
+<tr>
+<td><code>create_sawfish_maf_track</code></td>
+<td>Whether to create a MAF track from SNV calls when calling SVs with Sawfish. Requires SNV calling to finish before calling SVs, so deactivating this can speed up the pipeline. Defaults to <code>create_maf_track</code></td>
+<td><code>boolean</code></td>
+<td>True</td>
+<td></td>
+<td>True</td>
+</tr>
+<tr>
 <td><code>modules_testdata_base_path</code></td>
 <td>Base URL or local path to location of modules test dataset files</td>
 <td><code>string</code></td>
@@ -1817,6 +1841,30 @@
 <td>Interval in the reference to restrict diploid variant calling for females, in BED file format.</td>
 <td><code>string</code></td>
 <td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>strdrop_fraction</code></td>
+<td>Case average adjusted sequencing depth ratio cutoff in strdrop.</td>
+<td><code>number</code></td>
+<td>0.66</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>strdrop_alpha</code></td>
+<td>Unadjusted probability confidence level for coverage test in strdrop.</td>
+<td><code>number</code></td>
+<td>0.18</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>strdrop_edit</code></td>
+<td>Allele similarity Levenshtein edit distance ratio cutoff in strdrop.</td>
+<td><code>number</code></td>
+<td>0.9</td>
 <td></td>
 <td></td>
 </tr>
