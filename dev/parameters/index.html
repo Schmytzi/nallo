@@ -14,8 +14,6 @@
         <link rel="prev" href="../output/">
       
       
-        <link rel="next" href="../CITATIONS/">
-      
       
         
       
@@ -481,33 +479,6 @@
   
 
     
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../CITATIONS/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Citations
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -775,6 +746,14 @@
 <tr>
 <td><code>skip_prepare_gens_input</code></td>
 <td>Skip preparing input data for Gens</td>
+<td><code>boolean</code></td>
+<td>False</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>skip_sex_check</code></td>
+<td>Skip sex check</td>
 <td><code>boolean</code></td>
 <td>False</td>
 <td></td>
@@ -1180,6 +1159,14 @@
 <td></td>
 <td></td>
 </tr>
+<tr>
+<td><code>fai</code></td>
+<td>Reference genome index file</td>
+<td><code>string</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 <h2 id="institutional-config-options">Institutional config options</h2>
@@ -1360,7 +1347,7 @@
 <td><code>pipelines_testdata_base_path</code></td>
 <td>Base URL or local path to location of pipeline test dataset files</td>
 <td><code>string</code></td>
-<td>https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/eaabae15e3ee2b074057363a7467469b09f0957e/</td>
+<td>https://raw.githubusercontent.com/genomic-medicine-sweden/test-datasets/59c411038dac1e4dab2d745c80d382f047433539/</td>
 <td></td>
 <td>True</td>
 </tr>
@@ -1565,6 +1552,14 @@
 <td></td>
 </tr>
 <tr>
+<td><code>mitochondrial_caller</code></td>
+<td>Which mitochondrial caller to use for mitochondrial variant calling (<code>deepvariant</code>)</td>
+<td><code>string</code></td>
+<td>deepvariant</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
 <td><code>alignment_processes</code></td>
 <td>If alignment_processes is bigger than 1, input files will be split and aligned in parallel to reduce processing time.</td>
 <td><code>integer</code></td>
@@ -1585,6 +1580,22 @@
 <td>VEP cache version</td>
 <td><code>integer</code></td>
 <td>110</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>vep_mitochondrial_genome_distance</code></td>
+<td>The distance parameter used in VEP for mitochondrial SNVs</td>
+<td><code>integer</code></td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>vep_nuclear_genome_distance</code></td>
+<td>The distance parameter used in VEP for nuclear SNVs</td>
+<td><code>integer</code></td>
+<td>5000</td>
 <td></td>
 <td></td>
 </tr>
@@ -1695,6 +1706,14 @@
 <tr>
 <td><code>extra_yak_options</code></td>
 <td>Extra options to yak, used for test profile.</td>
+<td><code>string</code></td>
+<td></td>
+<td></td>
+<td>True</td>
+</tr>
+<tr>
+<td><code>extra_somalier_relate_infer_options</code></td>
+<td>Extra options to somalier relate infer, used for test profile.</td>
 <td><code>string</code></td>
 <td></td>
 <td></td>
@@ -2008,22 +2027,6 @@
             </div>
           </a>
         
-        
-          
-          <a href="../CITATIONS/" class="md-footer__link md-footer__link--next" aria-label="Next: Citations">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Citations
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
